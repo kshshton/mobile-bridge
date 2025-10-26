@@ -8,6 +8,12 @@ Install **Termux** and **Termux-API** via **F-Droid**.
 
 ### Termux
 
+Save your local address IP to `.env` file:
+
+```bash
+echo IP=YOUR_LOCAL_IP_ADDRESS > .env
+```
+
 Update packages:
 
 ```bash
@@ -26,25 +32,13 @@ Install Python's modules:
 pip install -r https://raw.githubusercontent.com/kshshton/mobile-bridge/refs/heads/main/sub/requirements.txt
 ```
 
-Create `.env` file:
-
-```bash
-touch .env
-```
-
-Edit its content:
-
-```bash
-IP=YOUR_LOCAL_IP_ADDRESS
-```
-
 Download MQTT server script:
 
 ```bash
 curl -O https://raw.githubusercontent.com/kshshton/mobile-bridge/refs/heads/main/sub/mqtt_server.py
 ```
 
-Set permissions for script:
+Set script as executable:
 
 ```bash
 chmod +x mqtt_server.py
