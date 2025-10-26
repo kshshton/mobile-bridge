@@ -1,6 +1,10 @@
 **Mobile Bridge** is a connector between two mobile devices (subscriber and publisher). Hardware controller (React Native UI) is allowing you to remotely control other smartphone's hardware features via MQTT messaging over Wi-Fi. The app connects to a local MQTT broker and provides real-time control of device functions like the torch (flashlight) and vibration.
 
+<<<<<<< HEAD
 ## Project Setup
+=======
+## Project setup
+>>>>>>> fc1accaacff7677a2e33ba38b08b06960f3f183d
 
 ### 1) Mobile device (Android)
 
@@ -9,6 +13,12 @@ Install **Termux** and **Termux-API** via **F-Droid**.
 ---
 
 ### Termux
+
+Save your local IP address to `.env` file:
+
+```bash
+echo IP=YOUR_LOCAL_IP_ADDRESS > .env
+```
 
 Update packages:
 
@@ -34,7 +44,7 @@ Download MQTT server script:
 curl -O https://raw.githubusercontent.com/kshshton/mobile-bridge/refs/heads/main/sub/mqtt_server.py
 ```
 
-Set permissions for script:
+Set script as executable:
 
 ```bash
 chmod +x mqtt_server.py
@@ -100,7 +110,7 @@ net start mosquitto
 You can test MQTT connection by command:
 
 ```powershell
-mosquitto_pub -h {your_local_ip} -t phone/control -m ping
+mosquitto_pub -h YOUR_LOCAL_IP_ADDRESS -t phone/control -m '{\"command\":\"ping\"}'
 ```
 
 *(you should receive "pong" message)*
