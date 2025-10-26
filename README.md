@@ -1,10 +1,6 @@
 **Mobile Bridge** is a connector between two mobile devices (subscriber and publisher). Hardware controller (React Native UI) is allowing you to remotely control other smartphone's hardware features via MQTT messaging over Wi-Fi. The app connects to a local MQTT broker and provides real-time control of device functions like the torch (flashlight) and vibration.
 
-<<<<<<< HEAD
-## Project Setup
-=======
 ## Project setup
->>>>>>> fc1accaacff7677a2e33ba38b08b06960f3f183d
 
 ### 1) Mobile device (Android)
 
