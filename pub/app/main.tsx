@@ -1,14 +1,15 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Alert, Button, StyleSheet, Switch, Text, TextInput, View } from "react-native";
+import { Alert, Button, StyleSheet, Switch, Text, View } from "react-native";
 // @ts-ignore
+import Slider from "@react-native-community/slider";
 import mqtt from "mqtt";
 
 export default function MainScreen() {
     const router = useRouter();
     const { ip } = useLocalSearchParams(); // IP query param
     const [client, setClient] = useState<mqtt.MqttClient | null>(null);
-    const [vibrateDuration, setVibrateDuration] = useState("500");
+    const [vibrateDuration, setVibrateDuration] = useState<number>(500);
     const [torchOn, setTorchOn] = useState(false);
     const topic = "phone/control";
 
@@ -42,16 +43,11 @@ export default function MainScreen() {
     };
 
     const handleVibrate = () => {
-        const ms = parseInt(vibrateDuration);
         if (!client) {
             Alert.alert("Error", "MQTT client not connected");
             return;
         }
-        if (isNaN(ms) || ms <= 0) {
-            Alert.alert("Error", "Please enter a valid positive number");
-            return;
-        }
-        const message = JSON.stringify({ command: "vibrate", ms });
+        const message = JSON.stringify({ command: "vibrate", ms: vibrateDuration });
         client.publish(topic, message, (err) => {
             if (err) Alert.alert("Error", "Failed to send MQTT message");
         });
@@ -59,7 +55,7 @@ export default function MainScreen() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Main Screen</Text>
+            <Text style={styles.title}>Hardware controller</Text>
             <Text style={styles.subtitle}>Wi-Fi IP: {ip}</Text>
 
             {/* Light switch */}
@@ -74,15 +70,21 @@ export default function MainScreen() {
                 />
             </View>
 
-            {/* Vibrate section */}
+            {/* Vibrate section with Slider */}
             <View style={styles.section}>
-                <Text style={styles.label}>Vibrate</Text>
-                <TextInput
-                    style={styles.input}
-                    keyboardType="numeric"
+                <Text style={styles.label}>
+                    Vibrate Duration: {vibrateDuration} ms
+                </Text>
+                <Slider
+                    style={{ width: "100%", height: 40 }}
+                    minimumValue={0}
+                    maximumValue={2000}
+                    step={50}
+                    minimumTrackTintColor="#007AFF"
+                    maximumTrackTintColor="#ccc"
+                    thumbTintColor="#007AFF"
                     value={vibrateDuration}
-                    onChangeText={setVibrateDuration}
-                    placeholder="Duration in ms"
+                    onValueChange={setVibrateDuration}
                 />
                 <Button title="Activate" onPress={handleVibrate} />
             </View>
@@ -98,12 +100,4 @@ const styles = StyleSheet.create({
     subtitle: { fontSize: 16, marginBottom: 30 },
     section: { marginBottom: 30, alignItems: "center", width: "80%" },
     label: { fontSize: 18, marginBottom: 10 },
-    input: {
-        borderWidth: 1,
-        borderColor: "#ccc",
-        borderRadius: 8,
-        padding: 10,
-        width: "100%",
-        marginBottom: 10,
-    },
 });
