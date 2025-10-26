@@ -5,22 +5,25 @@ import subprocess
 from os import getenv
 from dotenv import load_dotenv
 
+
 load_dotenv()
 
 BROKER = getenv("IP")
 TOPIC = "phone/control"
+
 
 def on_message(client, userdata, msg):
     payload = msg.payload.decode()
     print(f"Received: {payload}")
     if payload == "ping":
         print("pong")
-    elif payload == "torch_on":
-        subprocess.run(["termux-torch", "on"])
-    elif payload == "torch_off":
-        subprocess.run(["termux-torch", "off"])
+    elif payload == "torch":
+        status = payload.get("status")
+        subprocess.run(["termux-torch", status])
     elif payload == "vibrate":
-        subprocess.run(["termux-vibrate", "-d", "500"])
+        ms = payload.get("ms")
+        assert ms <= 5000, "Exceeded limit!"
+        subprocess.run(["termux-vibrate", "-d", ms])
     else:
         print("Unknown command")
 
