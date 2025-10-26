@@ -15,8 +15,15 @@ TOPIC = "phone/control"
 
 
 def on_message(client, userdata, msg):
-    payload = json.loads(msg.payload.decode())
-    print(f"Received: {payload}")
+    payload_raw = msg.payload.decode().strip()
+    print(f"Received: {payload_raw}")
+
+    try:
+        payload = json.loads(payload_raw)
+    except json.JSONDecodeError:
+        print("Can't load JSON!")
+        return
+
     cmd = payload.get("command")
     if cmd == "ping":
         print("pong")
@@ -25,10 +32,11 @@ def on_message(client, userdata, msg):
         subprocess.run(["termux-torch", status])
     elif cmd == "vibrate":
         ms = int(payload.get("ms"))
-        assert ms <= 5000, "Exceeded limit!"
+        assert ms <= 2000, "Exceeded limit!"
         subprocess.run(["termux-vibrate", "-d", str(ms)])
     else:
         print("Unknown command")
+
 
 def main():
     client = mqtt.Client()
