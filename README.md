@@ -26,6 +26,18 @@ Install Python's modules:
 pip install -r https://raw.githubusercontent.com/kshshton/mobile-bridge/refs/heads/main/sub/requirements.txt
 ```
 
+Create `.env` file:
+
+```bash
+touch .env
+```
+
+Edit its content:
+
+```bash
+IP=YOUR_LOCAL_IP_ADDRESS
+```
+
 Download MQTT server script:
 
 ```bash
@@ -98,7 +110,7 @@ net start mosquitto
 You can test MQTT connection by command:
 
 ```powershell
-mosquitto_pub -h {your_local_ip} -t phone/control -m '{\"command\":\"ping\"}'
+mosquitto_pub -h YOUR_LOCAL_IP_ADDRESS -t phone/control -m '{\"command\":\"ping\"}'
 ```
 
 *(you should receive "pong" message)*
