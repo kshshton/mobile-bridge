@@ -1,10 +1,12 @@
-**Mobile Bridge** is a connector between two mobile devices (subscriber and publisher). React Native UI is allowing you to remotely control other smartphone's hardware features via MQTT messaging over Wi-Fi. The app connects to a local MQTT broker and provides real-time control of device functions like the torch (flashlight) and vibration.
+**Mobile Bridge** is a connector between two mobile devices (subscriber and publisher). Hardware controller (React Native UI) is allowing you to remotely control other smartphone's hardware features via MQTT messaging over Wi-Fi. The app connects to a local MQTT broker and provides real-time control of device functions like the torch (flashlight) and vibration.
 
-## Settings
+## Project Setup
 
 ### 1) Mobile device (Android)
 
 Install **Termux** and **Termux-API** via **F-Droid**.
+
+---
 
 ### Termux
 
@@ -58,7 +60,7 @@ MQTT listener (used for mobile server / subscriber):
 listener 1883 0.0.0.0
 ```
 
-Websocket listener (used for React Native Interface / publisher):
+Websocket listener (used for hardware controller / publisher):
 
 ```text
 listener 9001
@@ -105,7 +107,7 @@ mosquitto_pub -h {your_local_ip} -t phone/control -m ping
 
 ---
 
-### Initialize React Native app
+### Hardware controller
 
 Clone repo:
 
