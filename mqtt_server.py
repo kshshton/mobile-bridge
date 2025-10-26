@@ -13,14 +13,15 @@ TOPIC = "phone/control"
 
 
 def on_message(client, userdata, msg):
-    payload = msg.payload.decode()
+    payload = msg.payload.decode()    
     print(f"Received: {payload}")
-    if payload == "ping":
+    cmd = payload.get("command")
+    if cmd == "ping":
         print("pong")
-    elif payload == "torch":
+    elif cmd == "torch":
         status = payload.get("status")
         subprocess.run(["termux-torch", status])
-    elif payload == "vibrate":
+    elif cmd == "vibrate":
         ms = payload.get("ms")
         assert ms <= 5000, "Exceeded limit!"
         subprocess.run(["termux-vibrate", "-d", ms])
