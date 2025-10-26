@@ -6,9 +6,11 @@
 
 Install **Termux** and **Termux-API** via **F-Droid**.
 
+---
+
 ### Termux
 
-Save your local address IP to `.env` file:
+Save your local IP address to `.env` file:
 
 ```bash
 echo IP=YOUR_LOCAL_IP_ADDRESS > .env
