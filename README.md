@@ -73,7 +73,7 @@ listener 9001
 protocol websockets
 ```
 
-Set `allow_anonymous` flag:
+Enable `allow_anonymous` flag:
 
 ```text
 # Defaults to false, unless there are no listeners defined in the configuration
@@ -134,7 +134,7 @@ npx expo start
 
 You can initialize user interface by:
 - scanning QR code with second mobile device (Android/iOS)
-- using mobile emulator
+- mobile emulator
 - web browser
 
 <br>
