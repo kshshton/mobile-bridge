@@ -2,6 +2,8 @@
 
 import paho.mqtt.client as mqtt
 import subprocess
+import json
+
 from os import getenv
 from dotenv import load_dotenv
 
@@ -13,7 +15,7 @@ TOPIC = "phone/control"
 
 
 def on_message(client, userdata, msg):
-    payload = msg.payload.decode()    
+    payload = json.loads(msg.payload.decode())
     print(f"Received: {payload}")
     cmd = payload.get("command")
     if cmd == "ping":
@@ -22,9 +24,9 @@ def on_message(client, userdata, msg):
         status = payload.get("status")
         subprocess.run(["termux-torch", status])
     elif cmd == "vibrate":
-        ms = payload.get("ms")
+        ms = int(payload.get("ms"))
         assert ms <= 5000, "Exceeded limit!"
-        subprocess.run(["termux-vibrate", "-d", ms])
+        subprocess.run(["termux-vibrate", "-d", str(ms)])
     else:
         print("Unknown command")
 
