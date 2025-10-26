@@ -98,7 +98,7 @@ net start mosquitto
 You can test MQTT connection by command:
 
 ```powershell
-mosquitto_pub -h {your_local_ip} -t phone/control -m ping
+mosquitto_pub -h {your_local_ip} -t phone/control -m '{\"command\":\"ping\"}'
 ```
 
 *(you should receive "pong" message)*
